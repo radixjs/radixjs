@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/radixjs/radix/issues"
   },
-  "homepage": "https://github.com/radixjs/radix#readme"
+  "homepage": "https://github.com/radixjs/radix#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
 }

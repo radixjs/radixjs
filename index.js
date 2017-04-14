@@ -1,5 +1,1 @@
-const fs = require("fs");
-
-exports.bs = function () {
-    console.log(process.cwd());
-};
+exports.bs = require("./components/bs/main.js");
