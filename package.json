@@ -1,0 +1,29 @@
+{
+  "name": "radixjs",
+  "version": "1.0.0",
+  "description": "RadixJS 3.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/radixjs/radix.git"
+  },
+  "keywords": [
+    "Radix",
+    "Stack",
+    "Cortney",
+    "Knorr",
+    "Js",
+    "Mongo",
+    "Loki",
+    "Redis"
+  ],
+  "author": "Cortney Knorr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/radixjs/radix/issues"
+  },
+  "homepage": "https://github.com/radixjs/radix#readme"
+}
