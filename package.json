@@ -1,6 +1,6 @@
 {
   "name": "radixjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "RadixJS 3.0.0",
   "main": "index.js",
   "scripts": {
