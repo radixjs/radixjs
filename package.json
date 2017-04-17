@@ -50,9 +50,7 @@
     "request": "^2.69.0",
     "sha256": "^0.2.0",
     "spdy": "^3.4.4",
-    "winston": "^2.1.1"
-  },
-  "devDependencies": {
+    "winston": "^2.1.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.1.1",
