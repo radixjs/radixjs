@@ -734,24 +734,24 @@ exports.lex = {
 
 exports.after = (mod, ...args) => {
     var node_env = mod.settings.environment = mod.settings.environment || "development";
-    mod.prefix = "dist/" + node_env;
+    mod.prefix = path.join(process.cwd(), "dist/", node_env.toString());
     mod.environment = env[node_env];
 };
 
 io = {
     server: {
         in: [
-            'sources/app/**/*.js',
-            'sources/routers/**/*.js',
-            'sources/models/**/*.js',
-            'sources/hooks/**/*.js',
-            'app/server/**/*.js'
+            'app/**/*.js',
+            'routers/**/*.js',
+            'models/**/*.js',
+            'hooks/**/*.js',
+            ''
         ], out: '/'
     },
     independent: {
         in: [
             "package.json",
-            "app/bs/ressources/launch.js"
+            ""
         ],
         out: "./"
     },
@@ -765,12 +765,12 @@ io = {
     },
     stylesheets: {
         in: [
-            'sources/assets/stylesheets/**/*.scss',
-            'sources/assets/stylesheets/**/*.sass',
-            'sources/assets/stylesheets/**/*.css'
+            'front/stylesheets/**/*.scss',
+            'front/stylesheets/**/*.sass',
+            'front/stylesheets/**/*.css'
         ],
         out: '/assets/stylesheets/',
-        root: "sources/"
+        root: "/"
     },
     views: {
         in: 'sources/views/**/*',
