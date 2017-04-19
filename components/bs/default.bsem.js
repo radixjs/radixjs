@@ -774,7 +774,7 @@ io = {
         root: "/"
     },
     views: {
-        in: 'sources/views/**/*',
+        in: 'views/**/*',
         out: '/views/'
     },
     javascript: {
@@ -800,7 +800,7 @@ io = {
         ],
         out: "/assets/multiple/"
     },
-    typescript: {in: "sources/assets/typescript/**/**.ts", out: "/assets/javascript/compiled"}
+    typescript: {in: "front/typescript/**/**.ts", out: "/assets/javascript/compiled"}
 };
 
 //Create Void infrastructure
@@ -850,24 +850,24 @@ var readFile = function (path) {
 
 let watch = {
     'server': [
-        'sources/app/**/*.js',
-        'sources/hooks/**/*.js',
-        'sources/models/**/*.js',
-        'sources/routers/**/*.js'
+        'app/**/*.js',
+        'hooks/**/*.js',
+        'models/**/*.js',
+        'routers/**/*.js'
     ],
     'dev': 'app/server/**/**.*',
-    'static': 'sources/public/**/*',
+    'static': 'public/**/*',
     'stylesheets': [
-        'sources/assets/stylesheets/**/**.scss',
-        "config/buildSystem.json"
+        'assets/stylesheets/**/**.scss',
+        "config/bundling.json"
     ],
-    'multiple': "sources/assets/multiple/**/**",
-    'views': 'sources/views/**/**',
+    'multiple': "front/multiple/**/**",
+    'views': 'views/**/**',
     'javascript': [
-        'sources/assets/javascript/**/**.js',
-        "config/buildSystem.json"
+        'front/javascript/**/**.js',
+        "config/bundling.json"
     ],
-    'typescript': 'sources/assets/typescript/**/**.ts',
+    'typescript': 'assets/typescript/**/**.ts',
 };
 
 exports.tasks = {
