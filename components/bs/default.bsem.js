@@ -746,13 +746,13 @@ io = {
             'routers/**/*.js',
             'models/**/*.js',
             'hooks/**/*.js',
-            ''
+            'node_modules/radixjs/components/server/**/*.js'
         ], out: '/'
     },
     independent: {
         in: [
             "package.json",
-            ""
+            'node_modules/radixjs/components/bs/ressources/launch.js'
         ],
         out: "./"
     },
@@ -761,8 +761,8 @@ io = {
         out: "config/"
     },
     static: {
-        in: 'sources/public/**/*',
-        out: '/public/'
+        in: 'assets/**/*',
+        out: '/assets/'
     },
     stylesheets: {
         in: [
@@ -778,26 +778,25 @@ io = {
         out: '/views/'
     },
     javascript: {
-        in: "sources/assets/javascript/**/**.js",
+        in: "front/javascript/**/**.js",
         out: "/assets/javascript",
-        bundles: "sources/assets/javascript/**.esnext.js",
-        root: "sources/"
+        root: "/"
     },
     multiple: {
-        in_js: "sources/assets/multiple/**/**.js",
-        in_ts: "sources/assets/multiple/**/**.ts",
-        in_pug: "sources/assets/multiple/**/**.pug",
+        in_js: "front/multiple/**/**.js",
+        in_ts: "front/multiple/**/**.ts",
+        in_pug: "front/multiple/**/**.pug",
         in_css: [
-            "sources/assets/multiple/**/**.scss",
-            "sources/assets/multiple/**/**.sass"
+            "front/multiple/**/**.scss",
+            "front/multiple/**/**.sass"
         ],
         in_static: [
-            "sources/assets/multiple/**/**.**",
-            "!sources/assets/multiple/**/**.pug",
-            "!sources/assets/multiple/**/**.scss",
-            "!sources/assets/multiple/**/**.sass",
-            "!sources/assets/multiple/**/**.ts",
-            "!sources/assets/multiple/**/**.js"
+            "front/multiple/**/**.**",
+            "!front/multiple/**/**.pug",
+            "!front/multiple/**/**.scss",
+            "!front/multiple/**/**.sass",
+            "!front/multiple/**/**.ts",
+            "!front/multiple/**/**.js"
         ],
         out: "/assets/multiple/"
     },
