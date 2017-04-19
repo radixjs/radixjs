@@ -3,7 +3,7 @@ function E2eFeatureBatch(batchObj) {
     this.features = {};
 
     for(let featureData of batchObj){
-        this.features[featureData.name || "unnamed"] = radix.dapis.e2e.featureFactory(featureData);
+        this.features[featureData.name || "unnamed"] = $libraries.e2e.featureFactory(featureData);
     }
 
     this.testAllFeatures = function testAllFeatures(mute) {

@@ -20,9 +20,9 @@ function radix_dapis_mailer() {
         pehgs: {
             sendMail(fromArg, toArg, mailArg){
                 return function*(request, response, next) {
-                    let from = radix.dapis.wizards.standards.ehgf13Arg(fromArg, request, null);
-                    let to = radix.dapis.wizards.standards.ehgf13Arg(toArg, request, null);
-                    let mail = radix.dapis.wizards.standards.ehgf13Arg(mailArg, request, null);
+                    let from = $libraries.wizards.standards.ehgf13Arg(fromArg, request, null);
+                    let to = $libraries.wizards.standards.ehgf13Arg(toArg, request, null);
+                    let mail = $libraries.wizards.standards.ehgf13Arg(mailArg, request, null);
                     thisDapi.sendMails([{
                         from,
                         to,

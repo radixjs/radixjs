@@ -14,7 +14,7 @@ function E2eFeature(nameArg, urlArg, testsArg, optDelayArg) {
         testsDone = 0;
         const review = this.review;
         return controlFlowCall(function*() {
-            yield* radix.dapis.e2e.fcs.on(url);
+            yield* $libraries.e2e.fcs.on(url);
             let lastTestResult = true;
             for (var test of tests) {
                 if (test.params.linked) {
@@ -40,7 +40,7 @@ function E2eFeature(nameArg, urlArg, testsArg, optDelayArg) {
                     break;
                 }
                 if (delay) {
-                    yield* radix.dapis.e2e.fcs.sleep(delay);
+                    yield* $libraries.e2e.fcs.sleep(delay);
                 }
             }
             lastTime = Date.now() - startTime;

@@ -178,6 +178,9 @@ module.exports = function () {
     }
 
     switch (process.argv[2]) {
+        case "launch":
+            require(path.join(process.cwd(), "dist", environment(3, 4), "launch.js"));
+            break;
         case "build":
         case "watch":
         case "serve":

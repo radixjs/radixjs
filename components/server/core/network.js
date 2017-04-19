@@ -107,7 +107,7 @@ function* radix_core_network(worker) {
             console.log(radix.globals.WORKER.id + " |-| Radix start hook executed");
 
             if ($project.env.name === 'tests') {
-                yield radixCapture(radix.dapis.e2e.init, "e2eInit");
+                yield radixCapture($libraries.e2e.init, "e2eInit");
                 yield radixCapture(launchTestsHook, "tests");
             }
         })()

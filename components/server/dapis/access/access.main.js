@@ -3,13 +3,13 @@ function radix_dapis_access() {
         pehgs: {
             restrictTo(limitArg, failureRedirectArg) {
                 return function*(request, response, next) {
-                    let limit = radix.dapis.wizards.standards.ehgf13Arg(limitArg, request, false);
-                    let failureRedirect = radix.dapis.wizards.standards.ehgf13Arg(failureRedirectArg, request, false);
+                    let limit = $libraries.wizards.standards.ehgf13Arg(limitArg, request, false);
+                    let failureRedirect = $libraries.wizards.standards.ehgf13Arg(failureRedirectArg, request, false);
 
                     if (request.user) {
                         if (request.user.admin || !limit) {
                             next();
-                        } else if ((yield* radix.dapis.groups.fcs.getUsersBestRights(request.user._id)) <= limit) {
+                        } else if ((yield* $libraries.groups.fcs.getUsersBestRights(request.user._id)) <= limit) {
                             next();
                         } else {
                             response.statusCode = 401;

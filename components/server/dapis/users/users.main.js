@@ -65,79 +65,79 @@ function radix_dapis_users() {
         ehgs: {
             create: function (leanInstanceArg) {
                 return function*(request, response){
-                    let leanInstance = radix.dapis.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.create(leanInstance);
+                    let leanInstance = $libraries.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
+                    let results = yield* $libraries.users.fcs.create(leanInstance);
                     response.send(results);
                 };
             },
             get: function (userIdArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.get(userId);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let results = yield* $libraries.users.fcs.get(userId);
                     response.send(results);
                 };
             },
             getPaged: function (pageArg, pageLengthArg) {
                 return function*(request, response){
-                    let page = radix.dapis.wizards.standards.ehgf13Arg(pageArg, request, false);
-                    let pageLength = radix.dapis.wizards.standards.ehgf13Arg(pageLengthArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.getPaged(page, pageLength);
+                    let page = $libraries.wizards.standards.ehgf13Arg(pageArg, request, false);
+                    let pageLength = $libraries.wizards.standards.ehgf13Arg(pageLengthArg, request, false);
+                    let results = yield* $libraries.users.fcs.getPaged(page, pageLength);
                     response.send(results);
                 };
             },
             count: function () {
                 return function*(request, response){
-                    response.send(yield* radix.dapis.users.fcs.count());
+                    response.send(yield* $libraries.users.fcs.count());
                 };
             },
             getWithoutPassword: function (userIdArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.getWithoutPassword(userId);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let results = yield* $libraries.users.fcs.getWithoutPassword(userId);
                     response.send(results);
                 };
             },
             getAllByRights: function (rightsArg) {
                 return function*(request, response){
-                    let rights = radix.dapis.wizards.standards.ehgf13Arg(rightsArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.getAllByRights(rights);
+                    let rights = $libraries.wizards.standards.ehgf13Arg(rightsArg, request, false);
+                    let results = yield* $libraries.users.fcs.getAllByRights(rights);
                     response.send(results);
                 };
             },
             exists: function (userIdArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.exists(userId);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let results = yield* $libraries.users.fcs.exists(userId);
                     response.send(results);
                 };
             },
             update: function (userIdArg, leanInstanceArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let leanInstance = radix.dapis.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.update(userId, leanInstance);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let leanInstance = $libraries.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
+                    let results = yield* $libraries.users.fcs.update(userId, leanInstance);
                     response.send(results);
                 };
             },
             remove: function (userIdArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.remove(userId);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let results = yield* $libraries.users.fcs.remove(userId);
                     response.send(results);
                 };
             },
             getRealRights: function (userIdArg) {
                 return function*(request, response){
-                    let userId = radix.dapis.wizards.standards.ehgf13Arg(userIdArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.getRealRights(userId);
+                    let userId = $libraries.wizards.standards.ehgf13Arg(userIdArg, request, false);
+                    let results = yield* $libraries.users.fcs.getRealRights(userId);
                     response.send(results);
                 };
             },
             checkCredentials: function (usernameArg, passwordArg) {
                 return function*(request, response){
-                    let username = radix.dapis.wizards.standards.ehgf13Arg(usernameArg, request, false);
-                    let password = radix.dapis.wizards.standards.ehgf13Arg(passwordArg, request, false);
-                    let results = yield* radix.dapis.users.fcs.checkCredentials(username, password);
+                    let username = $libraries.wizards.standards.ehgf13Arg(usernameArg, request, false);
+                    let password = $libraries.wizards.standards.ehgf13Arg(passwordArg, request, false);
+                    let results = yield* $libraries.users.fcs.checkCredentials(username, password);
                     response.send(results);
                 };
             }
@@ -145,8 +145,8 @@ function radix_dapis_users() {
         pehgs: {
             create: function (leanInstanceArg) {
                 return function*(request, response, next){
-                    let leanInstance = radix.dapis.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
-                    request.peh = yield* radix.dapis.users.fcs.create(leanInstance);
+                    let leanInstance = $libraries.wizards.standards.ehgf13Arg(leanInstanceArg, request, false);
+                    request.peh = yield* $libraries.users.fcs.create(leanInstance);
                     next();
                 };
             },

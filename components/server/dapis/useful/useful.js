@@ -3,14 +3,14 @@ function radix_dapis_useful() {
         ehgs: {
             quickRender(pageArg, injectorArg){
                 return function*(request, response, next) {
-                    let page = radix.dapis.wizards.standards.ehgf13Arg(pageArg, request, false);
-                    let injector = radix.dapis.wizards.standards.ehgf13Arg(injectorArg, request, r => false);
+                    let page = $libraries.wizards.standards.ehgf13Arg(pageArg, request, false);
+                    let injector = $libraries.wizards.standards.ehgf13Arg(injectorArg, request, r => false);
                     response.render(page, {user: request.user || false, page: page, environment: $project.env, data: injector});
                 }
             },
             plug(messageArg){
                 return function*(request, response, next) {
-                    let message = radix.dapis.wizards.standards.ehgf13Arg(messageArg, request, false);
+                    let message = $libraries.wizards.standards.ehgf13Arg(messageArg, request, false);
                     response.send(message);
                 }
             },
@@ -18,7 +18,7 @@ function radix_dapis_useful() {
         pehgs: {
             parseJson(arrayArg){
                 return function*(request, response, next) {
-                    let array = radix.dapis.wizards.standards.ehgf13Arg(arrayArg, request, "body");
+                    let array = $libraries.wizards.standards.ehgf13Arg(arrayArg, request, "body");
                     for (var index in request[array]) {
                         try {
                             request[array][index] = JSON.parse(request[array][index])
@@ -32,21 +32,21 @@ function radix_dapis_useful() {
             },
             quickRedirect(urlArg){
                 return function*(request, response, next) {
-                    let url = radix.dapis.wizards.standards.ehgf13Arg(urlArg, request, false);
+                    let url = $libraries.wizards.standards.ehgf13Arg(urlArg, request, false);
                     response.redirect(url);
                 }
             },
             setHeader(fieldArg, valueArg){
                 return function* (request, response, next) {
-                    let field = radix.dapis.wizards.standards.ehgf13Arg(fieldArg, request, false);
-                    let value = radix.dapis.wizards.standards.ehgf13Arg(valueArg, request, false);
+                    let field = $libraries.wizards.standards.ehgf13Arg(fieldArg, request, false);
+                    let value = $libraries.wizards.standards.ehgf13Arg(valueArg, request, false);
                     response.set(field, value);
                     next();
                 }
             },
             ternary(boolArg, ehgIfTrue, ehgIfFalse){
                 return function* (request, response, next) {
-                    let bool = radix.dapis.wizards.standards.ehgf13Arg(boolArg, request, false);
+                    let bool = $libraries.wizards.standards.ehgf13Arg(boolArg, request, false);
                     if(bool){
                         if(ehgIfFalse) {
                             yield* ehgIfTrue(request, response, next);

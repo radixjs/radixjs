@@ -73,16 +73,16 @@ function* radix_core_express() {
     app.set('view cache', $project.env.data.viewCache);
     radix.helpers.log("View cache " + ($project.env.data.viewCache ? "enabled" : "disabled"), 3);
 
-    radix.helpers.log("Loading Radix MAPIs", 3);
+    radix.helpers.log("Loading Radix modules", 3);
     radix.helpers.iLog();
-    let mapis = yield* hooks_mapis();
+    let modules = yield* hooks_modules();
 
-    for(let i in mapis){
-        loadMapi(i, mapis[i]);
+    for(let i in modules){
+        loadModule(i, modules[i]);
     };
 
     radix.helpers.lastLogLevel = 4;
-    radix.helpers.cLog("Radix MAPIs Loaded");
+    radix.helpers.cLog("Radix modules Loaded");
 
     radix.helpers.log("Setting up default Middleware");
     if ($project.env.name === 'development' || $project.env.name === 'tests') {

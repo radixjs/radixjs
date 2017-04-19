@@ -21,7 +21,6 @@ const gulp = require('gulp'),
     typescript = require('gulp-typescript'),
     pug = require('gulp-pug'),
     bundling = require(path.join(cwd, './config/bundling.json')),
-    jade = require('gulp-jade'),
     traceur = require('gulp-traceur'),
     env = require(path.join(cwd, './config/environments.json')),
     typescriptMainConfig = typescript.createProject('tsconfig.json'),
@@ -103,7 +102,7 @@ exports.lex = {
             if (mod.settings.name) {
                 switch (args[0]) {
                     case "schema":
-                        writeToFile("./sources/schemas/" + (mod.settings.path || mod.settings.name + ".gen.schema.js"), `module.exports = {
+                        writeToFile("./schemas/" + (mod.settings.path || mod.settings.name + ".gen.schema.js"), `module.exports = {
     $$name: "${mod.settings.name}",
     foo: {type: String, required: true, identifier: true},
     bar: {type: String},
@@ -111,7 +110,7 @@ exports.lex = {
 };`).then(data => console.log(`Schema ${mod.settings.name} generated!`));
                         break;
                     case "schema/users":
-                        writeToFile("./sources/schemas/" + (mod.settings.path || mod.settings.name + ".gen.schema.js"), `module.exports = {
+                        writeToFile("./schemas/" + (mod.settings.path || mod.settings.name + ".gen.schema.js"), `module.exports = {
     $$name: "users",
     username: {type: String, required: true, identifier: true, unique: true},
     password: {type: String, required: true},
@@ -120,7 +119,7 @@ exports.lex = {
                         break;
                     case "router":
                     case "router/normal":
-                        writeToFile("./sources/routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
+                        writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter;
     let plug = radix.dapis.useful.ehgs.plug;
 
@@ -131,7 +130,7 @@ exports.lex = {
                         `).then(data => console.log(`Router ${mod.settings.name} generated!`))
                         break;
                     case "router/users":
-                        writeToFile("./sources/routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
+                        writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter;
 
     //some useful functions
@@ -192,7 +191,7 @@ exports.lex = {
                         `).then(data => console.log(`Router ${mod.settings.name} managing users and access generated!`))
                         break;
                     case "router/upload":
-                        writeToFile("./sources/routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
+                        writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter;
     let plug = radix.dapis.useful.ehgs.plug;
     let upload = radix.dapis.files.pehgs.upload;
@@ -219,7 +218,7 @@ exports.lex = {
                         `).then(data => console.log(`Router ${mod.settings.name} managing uploads and files generated!`))
                         break;
                     case "model":
-                        writeToFile("./sources/models/" + (mod.settings.path || mod.settings.name + ".gen.model.js"), `function ${mod.settings.name}Model(){
+                        writeToFile("./models/" + (mod.settings.path || mod.settings.name + ".gen.model.js"), `function ${mod.settings.name}Model(){
     const mongoose = getDependency('mongoose');
     const Schema = mongoose.Schema;
     const conv = radix.dapis.wizards.standards.ehgf13Arg;
@@ -329,7 +328,7 @@ exports.lex = {
                         `).then(data => console.log(`Model ${mod.settings.name} generated!`))
                         break;
                     case "component/style":
-                        let rootPath = "./sources/assets/stylesheets/";
+                        let rootPath = "./assets/stylesheets/";
                         if (mod.settings.language != "scss" && mod.settings.language != "sass") {
                             console.log("Component does not support this language");
                             break;
@@ -405,11 +404,11 @@ exports.lex = {
                         if (mod.settings.source) {
                             const mongoose = require('mongoose');
                             const Schema = mongoose.Schema;
-                            const basePath = "../../sources/schemas/";
+                            const basePath = "/schemas/";
 
                             let test;
                             try {
-                                test = require(path.join(basePath, mod.settings.source));
+                                test = require(path.join(process.cwd(), basePath, mod.settings.source));
                             } catch (all) {
                                 console.log("A problem occured oppening " + path.join("[PSD]/schemas/", mod.settings.source));
                                 break;
@@ -451,8 +450,8 @@ exports.lex = {
                                     }
                                 }
                             }
-                            let file = path.join("./sources/models/", mod.settings.path || (test.$$name + ".gen.model.js"));
-                            let file2 = path.join("./sources/routers/", mod.settings.path || (test.$$name + ".gen.router.js"));
+                            let file = path.join("./models/", mod.settings.path || (test.$$name + ".gen.model.js"));
+                            let file2 = path.join("./routers/", mod.settings.path || (test.$$name + ".gen.router.js"));
                             let content = "";
                             content += `function ${test.$$name}Model(){
     const mongoose = require('mongoose');
@@ -752,6 +751,7 @@ io = {
     independent: {
         in: [
             "package.json",
+            "radixfile.json",
             'node_modules/radixjs/components/bs/ressources/launch.js'
         ],
         out: "./"
@@ -1224,7 +1224,7 @@ exports.tasks = {
 
     //browser_sync
     'browser-sync': function (mod) {
-        var env = require('../../config/environments.json');
+        var env = require(path.join(process.cwd(), '/config/environments.json'));
         var node_env = mod.settings.environment || 'development';
 
         var _ = env[node_env];
