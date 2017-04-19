@@ -121,7 +121,7 @@ exports.lex = {
                     case "router/normal":
                         writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter;
-    let plug = radix.dapis.useful.ehgs.plug;
+    let plug = $libraries.useful.ehgs.plug;
 
     router.onGet("/", plug("Hello world"));
 
@@ -134,16 +134,16 @@ exports.lex = {
     let router = new RadixRouter;
 
     //some useful functions
-    let parseJson = radix.dapis.useful.pehgs.parseJson;
-    let redirect = radix.dapis.useful.pehgs.quickRedirect;
-    let ternary = radix.dapis.useful.pehgs.ternary;
-    let plug = radix.dapis.useful.ehgs.plug;
+    let parseJson = $libraries.useful.pehgs.parseJson;
+    let redirect = $libraries.useful.pehgs.quickRedirect;
+    let ternary = $libraries.useful.pehgs.ternary;
+    let plug = $libraries.useful.ehgs.plug;
 
     //users dependencies
-    let restrictTo = radix.dapis.access.pehgs.restrictTo;
-    let login = radix.dapis.access.pehgs.login;
-    let logout = radix.dapis.access.pehgs.logout;
-    let handlers = radix.dapis.users.ehgs;
+    let restrictTo = $libraries.access.pehgs.restrictTo;
+    let login = $libraries.access.pehgs.login;
+    let logout = $libraries.access.pehgs.logout;
+    let handlers = $libraries.users.ehgs;
 
     //Reusable extractors for dynamic args
     let bodyExtractor = r => r.body;
@@ -193,10 +193,10 @@ exports.lex = {
                     case "router/upload":
                         writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter;
-    let plug = radix.dapis.useful.ehgs.plug;
-    let upload = radix.dapis.files.pehgs.upload;
-    let restrictTo = radix.dapis.access.pehgs.restrictTo;
-    let handlers = radix.dapis.files.ehgs;
+    let plug = $libraries.useful.ehgs.plug;
+    let upload = $libraries.files.pehgs.upload;
+    let restrictTo = $libraries.access.pehgs.restrictTo;
+    let handlers = $libraries.files.ehgs;
 
     //Reusable extractors for dynamic args
     let bodyExtractor = r => r.body;
@@ -221,7 +221,7 @@ exports.lex = {
                         writeToFile("./models/" + (mod.settings.path || mod.settings.name + ".gen.model.js"), `function ${mod.settings.name}Model(){
     const mongoose = getDependency('mongoose');
     const Schema = mongoose.Schema;
-    const conv = radix.dapis.wizards.standards.ehgf13Arg;
+    const conv = $libraries.wizards.standards.ehgf13Arg;
 
     let structure = {
         foo: {type: String, required: true},
@@ -456,7 +456,7 @@ exports.lex = {
                             content += `function ${test.$$name}Model(){
     const mongoose = require('mongoose');
     const Schema = mongoose.Schema;
-    const conv = radix.dapis.wizards.standards.ehgf13Arg;
+    const conv = $libraries.wizards.standards.ehgf13Arg;
 
     let structure = ${formatSchema(object)};
 
@@ -680,8 +680,8 @@ exports.lex = {
 
 //====> Change following line depending on how you registered the model
     let handlers = $project.models.${test.$$name}.ehgs;
-    let parseJSON = radix.dapis.useful.pehgs.parseJson;
-    let limit = radix.dapis.access.pehgs.restrictTo;
+    let parseJSON = $libraries.useful.pehgs.parseJson;
+    let limit = $libraries.access.pehgs.restrictTo;
 
 
     let bodyInjector    = ${test.$$dataInjector || "request => request.body"};
