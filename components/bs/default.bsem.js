@@ -907,7 +907,7 @@ exports.tasks = {
         }));
 
         for (let bundle of (bundles.js || [])) {
-            let files = bundle.files.map(file => path.join(io.javascript.root, file));
+            let files = bundle.files.map(file => path.join(cwd, io.javascript.root, file));
             if (bundle.async) {
                 streams.push(new Promise(function (res, rej) {
                     gulp.src(files)
@@ -1068,7 +1068,7 @@ exports.tasks = {
         ));
 
         for (let bundle of (bundles.css || [])) {
-            let files = bundle.files.map(file => path.join(io.stylesheets.root, file));
+            let files = bundle.files.map(file => path.join(cwd, io.stylesheets.root, file));
 
             streams.push(new Promise((res, rej) => {
                 gulp.src(files)
