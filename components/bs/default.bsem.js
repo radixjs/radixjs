@@ -762,7 +762,7 @@ io = {
     },
     static: {
         in: 'assets/**/*',
-        out: '/assets/'
+        out: '/public/'
     },
     stylesheets: {
         in: [
