@@ -858,7 +858,7 @@ let watch = {
     'dev': 'app/server/**/**.*',
     'static': 'public/**/*',
     'stylesheets': [
-        'assets/stylesheets/**/**.scss',
+        'front/stylesheets/**/**.**',
         "config/bundling.json"
     ],
     'multiple': "front/multiple/**/**",
@@ -867,7 +867,7 @@ let watch = {
         'front/javascript/**/**.js',
         "config/bundling.json"
     ],
-    'typescript': 'assets/typescript/**/**.ts',
+    'typescript': 'front/typescript/**/**.ts',
 };
 
 exports.tasks = {
