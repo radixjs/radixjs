@@ -328,7 +328,7 @@ exports.lex = {
                         `).then(data => console.log(`Model ${mod.settings.name} generated!`))
                         break;
                     case "component/style":
-                        let rootPath = "./assets/stylesheets/";
+                        let rootPath = "./front/stylesheets/";
                         if (mod.settings.language != "scss" && mod.settings.language != "sass") {
                             console.log("Component does not support this language");
                             break;
