@@ -40,7 +40,6 @@ exports.init = function init() {
     $libraries.access = radix_dapis_access();
     $libraries.users = radix_dapis_users();
     $libraries.groups = radix_dapis_groups();
-    $libraries.files = radix_dapis_files();
     $libraries.mailer = radix_dapis_mailer();
     $libraries.useful = radix_dapis_useful();
     $libraries.e2e = radix_dapis_e2e();
@@ -48,7 +47,6 @@ exports.init = function init() {
     //Models
     $libraries.models.users = getDependency(radix_models_users);
     $libraries.models.groups = getDependency(radix_models_groups);
-    $libraries.models.files = getDependency(radix_models_files);
 
     //functions
     radix.functions.controlFlowCall = controlFlowCall;
