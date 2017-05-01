@@ -728,6 +728,7 @@ exports.lex = {
                         console.log("Can not generate this kind of ressource")
                 }
             }
+            process.exit();
         }
     }
 };
