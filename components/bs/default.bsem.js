@@ -708,12 +708,16 @@ exports.lex = {
     return router;
 }
 `;
-                                    return writeToFile(file2, content2);
+                                    return writeToFile(file2, content2)
+                                        .then(_ => {
+                                            process.exit();
+                                        });
                                 })
                                 .then(_ => {
                                     console.log();
                                     console.log(`${file2} was generated`);
                                     console.log(`Remember to rename file and register it in the router hook`);
+                                    process.exit();
                                 })
                                 .catch(error => {
                                     console.log("Something went wrong");
@@ -728,7 +732,6 @@ exports.lex = {
                         console.log("Can not generate this kind of ressource")
                 }
             }
-            process.exit();
         }
     }
 };
