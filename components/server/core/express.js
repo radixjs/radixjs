@@ -116,7 +116,7 @@ function* radix_core_express() {
 
 
     radix.helpers.log("Setting up Express session");
-    app.use(session(sessionOpt));
+    app.use($project.sessionManager = session(sessionOpt));
 
     //app and app dependencies
     radix.helpers.log("Setting up Radix other core Hooks").iLog();
