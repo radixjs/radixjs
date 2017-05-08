@@ -49,7 +49,7 @@ function* radix_core_express() {
 
     let sessionOpt = {};
     if($project.env.data.nodeCluster){
-        sessionOpt = {
+        $project.sessionOpts = sessionOpt = {
             store: new SStore(sstoreSettings),
             secret: 'a4f8071f-c873-4447-8ee2',
             proxy: true,
