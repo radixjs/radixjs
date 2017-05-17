@@ -103,7 +103,7 @@ module.exports = function () {
                 } else {
                     if (task.tasks && task.files) {
                         return new Promise((res, rej) => {
-                            gulp.watch(task.files, function () {
+                            gulp.watch(task.files, { usePolling: true }, function () {
                                 taskManagement(task.tasks);
                                 res();
                             });
