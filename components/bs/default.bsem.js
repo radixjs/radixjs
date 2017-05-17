@@ -15,6 +15,7 @@ const gulp = require('gulp'),
     minifyCss = require('gulp-cssnano'),
     del = require('del'),
     fs = require('fs'),
+    debounce = require('gulp-debounce'),
     cwd = process.cwd(),
     browserSync = require('browser-sync'),
     nodemon = require('gulp-nodemon'),
@@ -1017,6 +1018,7 @@ exports.tasks = {
             ];
             var stream = gulp.src(io.multiple.in_css)
                 .pipe(debug())
+                .pipe(debounce({ wait: 1000 }))
                 .pipe(gutil.env.type === 'production' ? gutil.noop() : sourcemaps.init())
                 .pipe(sass().on('error', sass.logError))
                 .pipe(postcss(processors))
@@ -1060,6 +1062,7 @@ exports.tasks = {
         streams.push(new Promise((res, rej) => {
                 gulp.src(io.stylesheets.in)
                     .pipe(debug())
+                    .pipe(debounce({ wait: 1000 }))
                     .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.init())
                     .pipe(sass().on('error', sass.logError))
                     .pipe(postcss(processors))
@@ -1077,6 +1080,7 @@ exports.tasks = {
             streams.push(new Promise((res, rej) => {
                 gulp.src(files)
                     .pipe(debug())
+                    .pipe(debounce({ wait: 1000 }))
                     .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.init())
                     .pipe(sass().on('error', sass.logError))
                     .pipe(concat(bundle.output))
