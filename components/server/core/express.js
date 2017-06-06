@@ -94,8 +94,9 @@ function* radix_core_express() {
     radix.helpers.log("Setting up redirections");
     $project.redirects = yield* hooks_redirects();
     app.use(function (request, response, next) {
+        var fullUrl = request.protocol + '://' + request.get('host') + request.originalUrl;
         var keys = Object.keys($project.redirects)
-            .filter(element => (new RegExp(element)).test(request.headers.host));
+            .filter(element => (new RegExp(element)).test(fullUrl));
         if (keys.length) {
             controlFlowCall($project.redirects[keys[0]].ehg())(request, response, next)
         } else {
@@ -110,7 +111,6 @@ function* radix_core_express() {
 
     radix.helpers.log("Setting up Public Folders");
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/node_modules', express.static(path.join(__dirname, '../../node_modules')));
     app.use('/assets', express.static(path.join(__dirname, './assets')));
     app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
