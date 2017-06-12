@@ -486,20 +486,20 @@ exports.lex = {
         get: function* get(page, length){
             return yield model.find().skip(page*length).limit(length).lean();
         }${(()=>{
-                if(fieldSets.length) {
-                    let str = `,        
+                                if(fieldSets.length) {
+                                    let str = `,        
         fieldSet: {`;
-                    str += fieldSets.map(key =>`
+                                    str += fieldSets.map(key =>`
             ${key}: function* (){
                 return yield model.distinct("${key}");
             }`).join(",");
-                    str += `
+                                    str += `
         }`;
-                    return str;
-                } else {
-                    return "";
-                }
-            })()}
+                                    return str;
+                                } else {
+                                    return "";
+                                }
+                            })()}
     };
 
     model.ehgs = {
@@ -565,20 +565,20 @@ exports.lex = {
                 ));
             }
         }${(()=>{
-            if(fieldSets.length) {
-                let str = `,        
+                                if(fieldSets.length) {
+                                    let str = `,        
         fieldSet: {`;
-                str += fieldSets.map(key =>`
+                                    str += fieldSets.map(key =>`
             ${key}: function*(request, response, next){
                 return response.send(yield* model.fcs.fieldSet.${key}());
             }`).join(",");
-                str += `
+                                    str += `
         }`;
-                return str;
-            } else {
-                return "";
-            }
-        })()}
+                                    return str;
+                                } else {
+                                    return "";
+                                }
+                            })()}
     };
     
     model.pehgs = {
@@ -912,11 +912,11 @@ exports.tasks = {
         }));
 
         for (let bundle of (bundles.js || [])) {
-            let files = bundle.files.map(file => path.join(cwd, io.javascript.root, file));
+            let files = bundle.files.map(file => path.join(cwd, file));
+            let asyncF = null;
             if (bundle.async) {
-                streams.push(new Promise(function (res, rej) {
+                asyncF = function (res, rej) {
                     gulp.src(files)
-                        .pipe(debug())
                         .pipe(sourcemaps.init())
                         .pipe(rollupmep({
                             format: "amd",
@@ -924,27 +924,30 @@ exports.tasks = {
                         }))
                         .pipe(concat(bundle.output))
                         //only uglifyjs if gulp is ran with '--type production'
-                        .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
-                        .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                        .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
+                        .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                         .pipe(sourcemaps.write('./'))
                         .pipe(gulp.dest(path.join(prefix, io.javascript.out)))
                         .on('error', rej)
                         .on('end', res)
-                }));
+                };
             } else {
-                streams.push(new Promise(function (res, rej) {
+                asyncF = function (res, rej) {
                     gulp.src(files)
-                        .pipe(debug())
                         .pipe(sourcemaps.init())
                         .pipe(concat(bundle.output))
-                        .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
-                        .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                        .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
+                        .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                         .pipe(sourcemaps.write('./'))
                         .pipe(gulp.dest(path.join(prefix, io.javascript.out)))
                         .on('error', rej)
                         .on('end', res)
-                }));
+                };
             }
+            streams.push((new Promise(asyncF)).then(_ => console.log(`
+${mod.settings.environment} bundle ${bundle.output}
+\t${bundle.files.join("\n\t")}
+            `)));
         }
 
         return Promise.all(streams).then(bsreload);
@@ -958,8 +961,8 @@ exports.tasks = {
                 .pipe(debug())
                 .pipe(sourcemaps.init())
                 //only uglifyjs if gulp is ran with '--type production'
-                .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
-                .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest(path.join(prefix, io.multiple.out)))
                 .on('error', rej)
@@ -976,8 +979,8 @@ exports.tasks = {
                 .pipe(sourcemaps.init())
                 .pipe(typescript(typescriptMultipleConfig))
                 //only uglifyjs if gulp is ran with '--type production'
-                .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
-                .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest(path.join(prefix, io.multiple.out)))
                 .on('error', rej)
@@ -1019,11 +1022,11 @@ exports.tasks = {
             var stream = gulp.src(io.multiple.in_css)
                 .pipe(debug())
                 .pipe(debounce({ wait: 1000 }))
-                .pipe(gutil.env.type === 'production' ? gutil.noop() : sourcemaps.init())
+                .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.init())
                 .pipe(sass().on('error', sass.logError))
                 .pipe(postcss(processors))
-                .pipe(gutil.env.type === 'production' ? minifyCss() : gutil.noop())
-                .pipe(gutil.env.type === 'production' ? gutil.noop() : sourcemaps.write('./'))
+                .pipe(mod.settings.environment === 'production' ? minifyCss() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.write('./'))
                 .pipe(gulp.dest(path.join(prefix, io.multiple.out)))
                 .on('error', rej)
             ;
@@ -1039,9 +1042,9 @@ exports.tasks = {
                 .pipe(sourcemaps.init())
                 .pipe(concat('index.js'))
                 // has to be fixed
-                // .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
+                // .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
                 // //only uglifyjs if gulp is ran with '--type production'
-                // .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                // .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest(path.join(prefix, io.server.out)))
                 .on('error', rej)
@@ -1077,21 +1080,24 @@ exports.tasks = {
         for (let bundle of (bundles.css || [])) {
             let files = bundle.files.map(file => path.join(cwd, io.stylesheets.root, file));
 
-            streams.push(new Promise((res, rej) => {
+            streams.push((new Promise((res, rej) => {
                 gulp.src(files)
-                    .pipe(debug())
                     .pipe(debounce({ wait: 1000 }))
                     .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.init())
                     .pipe(sass().on('error', sass.logError))
                     .pipe(concat(bundle.output))
                     .pipe(postcss(processors))
-                    .pipe(gutil.env.type === 'production' ? minifyCss() : gutil.noop())
-                    .pipe(gutil.env.type === 'production' ? gutil.noop() : sourcemaps.write('./'))
+                    .pipe(mod.settings.environment === 'production' ? minifyCss() : gutil.noop())
+                    .pipe(mod.settings.environment === 'production' ? gutil.noop() : sourcemaps.write('./'))
                     .pipe(gulp.dest(path.join(prefix, io.stylesheets.out)))
                     .on('error', rej)
                     .on('end', res)
                 ;
-            }));
+            })).then(
+                streams.push((new Promise(asyncF)).then(_ => console.log(`
+${mod.settings.environment} bundle ${bundle.output}
+\t${bundle.files.join("\n\t")}
+            `)))));
         }
 
         return Promise.all(streams).then(bsreload);
@@ -1104,8 +1110,8 @@ exports.tasks = {
                 .pipe(sourcemaps.init())
                 .pipe(typescript(typescriptMainConfig))
                 //only uglifyjs if gulp is ran with '--type production'
-                .pipe(gutil.env.type === 'production' ? traceur() : gutil.noop())
-                .pipe(gutil.env.type === 'production' ? uglifyjs() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? traceur() : gutil.noop())
+                .pipe(mod.settings.environment === 'production' ? uglifyjs() : gutil.noop())
                 .pipe(sourcemaps.write('./'))
                 .pipe(gulp.dest(path.join(prefix, io.typescript.out)))
                 .on('error', rej)

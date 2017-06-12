@@ -12,11 +12,11 @@ function radix_core_environment(){
                 node_env = process.argv[4] || process.env.NODE_ENV || 'development';
                 break;
             default:
-                node_env = 'development';
+                node_env = process.env.NODE_ENV || 'development';
                 break;
         }
     } else {
-        node_env = 'development';
+        node_env = process.env.NODE_ENV || 'development';
     }
     if (env[node_env]) {
         $project.env.data = env[node_env];
