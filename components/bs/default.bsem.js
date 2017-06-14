@@ -121,7 +121,7 @@ exports.lex = {
                     case "router":
                     case "router/normal":
                         writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
-    let router = new RadixRouter;
+    let router = new RadixRouter();
     let plug = $libraries.useful.ehgs.plug;
 
     router.onGet("/", plug("Hello world"));
@@ -132,7 +132,7 @@ exports.lex = {
                         break;
                     case "router/users":
                         writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
-    let router = new RadixRouter;
+    let router = new RadixRouter();
 
     //some useful functions
     let parseJson = $libraries.useful.pehgs.parseJson;
@@ -193,7 +193,7 @@ exports.lex = {
                         break;
                     case "router/upload":
                         writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
-    let router = new RadixRouter;
+    let router = new RadixRouter();
     let plug = $libraries.useful.ehgs.plug;
     let upload = $libraries.files.pehgs.upload;
     let restrictTo = $libraries.access.pehgs.restrictTo;
@@ -677,7 +677,7 @@ exports.lex = {
 
                                     let content2 = "";
                                     content2 += `function ${test.$$name}Router(){
-    let router = new RadixRouter;
+    let router = new RadixRouter();
 
 //====> Change following line depending on how you registered the model
     let handlers = $project.models.${test.$$name}.ehgs;
