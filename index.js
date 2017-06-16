@@ -1,1 +1,1 @@
-exports.bs = require("./components/bs/main.js");
+exports.bs = require("./bs/main.js");
