@@ -5,11 +5,9 @@ var $project = {
     env: {},
     middleware: {},
     moduleList: new Set()
-}
-
-var $modules = {
-
 };
+
+var $modules = {};
 
 var $libraries = {
     models: {}
@@ -38,15 +36,12 @@ exports.init = function init() {
     //Dapis
     $libraries.wizards = radix_dapis_wizards();
     $libraries.access = radix_dapis_access();
-    $libraries.users = radix_dapis_users();
-    $libraries.groups = radix_dapis_groups();
+    $libraries.Users = getDependency(radix_models_users);
     $libraries.mailer = radix_dapis_mailer();
     $libraries.useful = radix_dapis_useful();
-    $libraries.e2e = radix_dapis_e2e();
 
     //Models
-    $libraries.models.users = getDependency(radix_models_users);
-    $libraries.models.groups = getDependency(radix_models_groups);
+    $libraries.models.users = $libraries.Users;
 
     //functions
     radix.functions.controlFlowCall = controlFlowCall;

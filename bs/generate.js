@@ -1,3 +1,17 @@
+const fs = require("fs");
+
+var writeToFile = function (filename, contents) {
+    return new Promise(function (resolve, reject) {
+        fs.writeFile(filename, contents, function (errors) {
+            if (errors) {
+                reject(errors);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
 module.exports = function (mod, ...args) {
     if (mod.settings.name) {
         switch (args[0]) {

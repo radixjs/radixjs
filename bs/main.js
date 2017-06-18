@@ -188,7 +188,7 @@ module.exports = function () {
             parse(process.argv.splice(2));
             break;
         default:
-            console.log("Check documentation or man for radix");
+            parse((["module", "default"]).concat(process.argv.splice(2)));
             break;
     }
 };

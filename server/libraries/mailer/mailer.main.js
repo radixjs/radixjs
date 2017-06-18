@@ -33,7 +33,6 @@ function radix_dapis_mailer() {
                     next();
                 }
             },
-
         }
     };
     return thisDapi;
