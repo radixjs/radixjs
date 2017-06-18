@@ -23,14 +23,6 @@ module.exports = function (mod, ...args) {
     ano: {ref: "${mod.settings.name}", identifier: true, populate: []}
 };`).then(data => console.log(`Schema ${mod.settings.name} generated!`));
                 break;
-            case "schema/users":
-                writeToFile("./schemas/" + (mod.settings.path || mod.settings.name + ".gen.schema.js"), `module.exports = {
-    $$name: "users",
-    username: {type: String, required: true, identifier: true, unique: true},
-    password: {type: String, required: true},
-    rights: {type: Number, identifier: true}
-};`).then(data => console.log(`Schema ${mod.settings.name} generated!`));
-                break;
             case "router":
             case "router/normal":
                 writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
@@ -43,7 +35,7 @@ module.exports = function (mod, ...args) {
 }
                         `).then(data => console.log(`Router ${mod.settings.name} generated!`))
                 break;
-            case "router/users":
+            case "router/access":
                 writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter();
 
