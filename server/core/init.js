@@ -65,6 +65,7 @@ exports.init = function init() {
     $project.config = {
         radixfile: getDependency(require("path").join(process.cwd(), "radixfile.json"))
     };
+    $project.config.main = $project.config.radixfile;
     $project.config.mongo = $project.config.radixfile.mongo;
     $project.config.redis = $project.config.radixfile.redis;
 

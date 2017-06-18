@@ -2,7 +2,6 @@ function radix_models_users(){
     const mongoose = getDependency('mongoose');
     const Schema = mongoose.Schema;
     const Hash = require('password-hash');
-    const conf = getDependency("./config/dapi/access.json");
 
     var users = new Schema({
         username: {type: String, required: true, unique: true},
@@ -13,8 +12,9 @@ function radix_models_users(){
     });
 
     users.statics.authenticate = function(username, password, callback) {
-        if (username === conf.adminUser.login.value &&
-            getDependency('sha256')(password) === conf.adminUser.password.value
+        let admin = $project.config.main.admin;
+        if (username === admin.login &&
+            getDependency('sha256')(password) === admin.password
         ) {
             callback(null, {admin : "true", id: "admin"});
         } else {
