@@ -233,7 +233,10 @@ let watch = {
         'routers/**/*.js'
     ],
     'dev': 'app/server/**/**.*',
-    'static': 'public/**/*',
+    'static': [
+        'public/**/*',
+        'radixFile.json'
+    ],
     'stylesheets': [
         'front/stylesheets/**/**.**',
         "config/bundling.json"

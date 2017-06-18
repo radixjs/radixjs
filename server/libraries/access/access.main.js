@@ -51,6 +51,9 @@ function radix_dapis_access() {
                     response.send(request.user || {});
                 }
             },
+        },
+        isAuth: function(request){
+            return Boolean(request.user);
         }
     };
 }
