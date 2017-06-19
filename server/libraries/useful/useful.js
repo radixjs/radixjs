@@ -61,6 +61,15 @@ function radix_dapis_useful() {
                         }
                     }
                 }
+            },
+            upload(fieldname, filesize) {
+                const multer = require('multer');
+                const path = require('path');
+                let upload = multer({
+                    dest: path.join(__dirname, "/uploads/"),
+                    limits: { fileSize: filesize }
+                });
+                return upload.array(fieldname);
             }
         }
     };

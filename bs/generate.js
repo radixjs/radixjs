@@ -38,90 +38,25 @@ module.exports = function (mod, ...args) {
             case "router/access":
                 writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
     let router = new RadixRouter();
+    let access = $libraries.access;
+    let render = $libraries.useful.ehgs.quickRender;
+    let ternary = $libraries.useful.pehgs.ternary ;
+    let redirect = $libraries.useful.pehgs.quickRedirect ;
 
-    //some useful functions
-    let parseJson = $libraries.useful.pehgs.parseJson;
-    let redirect = $libraries.useful.pehgs.quickRedirect;
-    let ternary = $libraries.useful.pehgs.ternary;
-    let plug = $libraries.useful.ehgs.plug;
-
-    //users dependencies
-    let restrictTo = $libraries.access.pehgs.restrictTo;
-    let login = $libraries.access.pehgs.login;
-    let logout = $libraries.access.pehgs.logout;
-    let handlers = $libraries.users.ehgs;
-
-    //Reusable extractors for dynamic args
-    let bodyExtractor = r => r.body;
-    let idExtractor = r => r.params.id;
-
-    router.onPost("/", handlers.create(r => {
-        return {
-            username: r.body.username,
-            password: r.body.password,
-            rights: 5
-        }
-    }));
-
-    //Routes
-    router.onRoute("/me")
-        .onGet(plug(r => r.user || {}))
-        .onPut(
-             restrictTo(5),
-             parseJson(),
-             handlers.update(r => r.user._id, bodyExtractor)
-        )
+    router.onRoute("/")
+        .onGet(ternary(access.isAuth, access.pehgs.logout()))
+        .onGet(render("auth.pug"))
+        .onPost(access.pehgs.login("/auth/switch", "/auth/"))
     ;
 
-    router.onRoute("/access")
-        .onPost(login("./success", "/"))
-        .onGet(logout(), redirect("/"))
-    ;
-
-    router.onAll("/success",
-        // if user is admin redirect to /admin else redirect to /
-        ternary(r => r.user.rights > 3, redirect("/admin"), redirect("/"))
-    );
-
-    router.onGet("/pages/:page", handlers.getPaged(r => r.params.page, 20));
-
-    router.onRoute("/byId/:id")
-        .onAll(restrictTo(2)) //restrict to admins
-    	.onGet(handlers.get(idExtractor))
-    	.onPut(handlers.update(idExtractor, bodyExtractor))
-    	.onDelete(handlers.remove(idExtractor))
-    ;
+    //On successful login
+    router.onAll("/switch", function*(request, response, next){
+        console.log(request.user);
+        response.send("You are authenticated");
+    });
 
     return router;
-};
-                        `).then(data => console.log(`Router ${mod.settings.name} managing users and access generated!`))
-                break;
-            case "router/upload":
-                writeToFile("./routers/" + (mod.settings.path || mod.settings.name + ".gen.router.js"), `function ${mod.settings.name}Router(){
-    let router = new RadixRouter();
-    let plug = $libraries.useful.ehgs.plug;
-    let upload = $libraries.files.pehgs.upload;
-    let restrictTo = $libraries.access.pehgs.restrictTo;
-    let handlers = $libraries.files.ehgs;
-
-    //Reusable extractors for dynamic args
-    let bodyExtractor = r => r.body;
-    let idExtractor = r => r.params.id;
-
-    router.onPost("/", upload(), plug(r => r.peh));
-
-    router.onGet("/pages/:page", handlers.getPaged(r => r.params.page, 20));
-
-    router.onRoute("/byId/:id")
-        .onAll(restrictTo(2)) //restrict to admins
-    	.onGet(handlers.get(idExtractor))
-    	.onPut(handlers.update(idExtractor, bodyExtractor))
-    	.onDelete(handlers.delete(idExtractor))
-    ;
-
-    return router;
-}
-                        `).then(data => console.log(`Router ${mod.settings.name} managing uploads and files generated!`))
+}`).then(data => console.log(`Router ${mod.settings.name} managing users and access generated!`))
                 break;
             case "model":
                 writeToFile("./models/" + (mod.settings.path || mod.settings.name + ".gen.model.js"), `function ${mod.settings.name}Model(){

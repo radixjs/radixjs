@@ -730,6 +730,9 @@ function generateFcs(identifiers, mIdentifiers) {
                 get: function* get(){
                     return yield model.find({${identifier}}).populate(popQuery).lean();
                 },
+                count: function* get(){
+                    return yield model.count({${identifier}}).populate(popQuery).lean();
+                },
                 delete: function* (){
                     return yield model.find({${identifier}}).remove();
                 },
@@ -804,6 +807,18 @@ function generateEhgs(identifiers, mIdentifiers) {
                             let data = yield* model.fcs.by${tap}(
                                 conv(${identifier}, request, false)
                             ).get();
+                            response.send(data);
+                        } catch(e) {
+                            next(500);
+                        }
+                    }
+                },
+                count(){
+                    return function*(request, response, next){
+                        try {
+                            let data = yield* model.fcs.by${tap}(
+                                conv(${identifier}, request, false)
+                            ).count();
                             response.send(data);
                         } catch(e) {
                             next(500);
@@ -913,6 +928,19 @@ function generatePehgs(identifiers, mIdentifiers, name) {
                         }
                     }
                 },
+                count(){
+                    return function*(request, response, next){
+                        try {
+                            let data = yield* model.fcs.by${tap}(
+                                conv(${identifier}, request, false)
+                            ).count();
+                            request.peh${name} = data;
+                            next();
+                        } catch(e) {
+                            next(500);
+                        }
+                    }
+                },
                 delete(){
                     return function*(request, response, next){
                         try {
@@ -950,12 +978,25 @@ function generatePehgs(identifiers, mIdentifiers, name) {
 function generateRoutes(identifiers, mIdentifiers) {
     let str = "";
 
-    for (let identifier of identifiers.concat(mIdentifiers)) {
+    for (let identifier of identifiers) {
         let res = capitalizeFirstLetter(identifier);
         str += `
     router.onRoute("/by${res}/:identifier")
         .onAll(limit(2))
         .onGet(handlers.by${res}(idInjector).get())
+        .onPut(parseJSON(), handlers.by${res}(idInjector).update(bodyInjector))
+        .onDelete(handlers.by${res}(idInjector).delete())
+    ;
+        `
+    }
+
+    for (let identifier of mIdentifiers) {
+        let res = capitalizeFirstLetter(identifier);
+        str += `
+    router.onRoute("/by${res}/:identifier")
+        .onAll(limit(2))
+        .onGet(handlers.by${res}(idInjector).get())
+        .onGet(handlers.by${res}(idInjector).count())
         .onPut(parseJSON(), handlers.by${res}(idInjector).update(bodyInjector))
         .onDelete(handlers.by${res}(idInjector).delete())
     ;
