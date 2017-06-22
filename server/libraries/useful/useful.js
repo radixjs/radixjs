@@ -48,7 +48,7 @@ function radix_dapis_useful() {
                 return function* (request, response, next) {
                     let bool = $libraries.wizards.standards.ehgf13Arg(boolArg, request, false);
                     if(bool){
-                        if(ehgIfFalse) {
+                        if(ehgIfTrue) {
                             yield* ehgIfTrue(request, response, next);
                         } else {
                             next();
