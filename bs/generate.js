@@ -308,24 +308,37 @@ module.exports = function (mod, ...args) {
 
     model.fcs = {
         create: function* create(leanInstance){
-            let ins = yield (new model(leanInstance)).save();
+            let ins = yield (new model(leanInstance)).save()
+                .catch(e => e)
+            ;
+            if (ins.errmsg) {
+                return yield ins;
+            };
 			return yield model.populate(ins, popQuery);
         },
         byId: function(id) {
             return {
                 get: function* get(){
-                    return yield model.findById(id).populate(popQuery);
+                    return yield model.findById(id).populate(popQuery)
+                        .catch(e => e)
+                    ;
                 },
                 delete: function* (){
-                    return yield model.findByIdAndRemove(id);
+                    return yield model.findByIdAndRemove(id)
+                        .catch(e => e)
+                    ;
                 },
                 update: function* update(leanInstance){
-                    return yield model.findByIdAndUpdate(id, leanInstance, {new: true});
+                    return yield model.findByIdAndUpdate(id, leanInstance, {new: true})
+                        .catch(e => e)
+                    ;
                 }
             }
         },${generateFcs(identifiers, mIdentifiers)}
         get: function* get(page, length){
-            return yield model.find().skip(page*length).limit(length).lean();
+            return yield model.find().skip(page*length).limit(length).lean()
+                .catch(e => e)
+            ;
         }${(() => {
                         if (fieldSets.length) {
                             let str = `,        
@@ -592,7 +605,7 @@ function formatSchema(object) {
         let j = 0;
         for (prop in object[key]) {
             j++;
-            if (prop == "type") {
+            if (prop === "type") {
                 if (j > 1) str += ", ";
                 str += prop + ": ";
                 switch (object[key]["type"]) {
@@ -602,11 +615,11 @@ function formatSchema(object) {
                     default:
                         str += object[key]["type"].name;
                 }
-            } else if (prop == "array") {
+            } else if (prop === "array") {
             } else {
                 if (j > 1) str += ", ";
                 str += prop + ": ";
-                if (typeof object[key][prop] == "function") {
+                if (typeof object[key][prop] === "function") {
                     let strf = object[key][prop];
                     str += strf.toString();
                 } else {
@@ -647,13 +660,19 @@ function generateFcs(identifiers, mIdentifiers) {
         by${capitalizeFirstLetter(identifier)}: function(${identifier}) {
             return {
                 get: function* get(){
-                    return yield model.findOne({${identifier}}).populate(popQuery);
+                    return yield model.findOne({${identifier}}).populate(popQuery)
+                        .catch(e => e)
+                    ;
                 },
                 delete: function* (){
-                    return yield model.findOneAndRemove({${identifier}});
+                    return yield model.findOneAndRemove({${identifier}})
+                        .catch(e => e)
+                    ;
                 },
                 update: function* update(leanInstance){
-                    return yield model.findOneAndUpdate({${identifier}}, leanInstance, {new: true});
+                    return yield model.findOneAndUpdate({${identifier}}, leanInstance, {new: true})
+                        .catch(e => e)
+                    ;
                 }
             }
         },`
@@ -663,16 +682,24 @@ function generateFcs(identifiers, mIdentifiers) {
         by${capitalizeFirstLetter(identifier)}: function(${identifier}) {
             return {
                 get: function* get(){
-                    return yield model.find({${identifier}}).populate(popQuery).lean();
+                    return yield model.find({${identifier}}).populate(popQuery).lean()
+                        .catch(e => e)
+                    ;
                 },
                 count: function* get(){
-                    return yield model.count({${identifier}}).populate(popQuery).lean();
+                    return yield model.count({${identifier}}).populate(popQuery).lean()
+                        .catch(e => e)
+                    ;
                 },
                 delete: function* (){
-                    return yield model.find({${identifier}}).remove();
+                    return yield model.find({${identifier}}).remove()
+                        .catch(e => e)
+                    ;
                 },
                 update: function* update(leanInstance){
-                    return yield model.update({${identifier}}, leanInstance, { multi: true });
+                    return yield model.update({${identifier}}, leanInstance, { multi: true })
+                        .catch(e => e)
+                    ;
                 }
             }
         },`
