@@ -68,6 +68,7 @@ exports.init = function init() {
     $project.config.main = $project.config.radixfile;
     $project.config.mongo = $project.config.radixfile.mongo;
     $project.config.redis = $project.config.radixfile.redis;
+    $project.config.mailer = getDependency("./config/libraries/mailer.json");
 
     radix_core_environment();
 };

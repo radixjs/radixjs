@@ -2,11 +2,11 @@ function radix_dapis_mailer() {
     let thisDapi = {
         sendMails(mails) {
             return new Promise(function (resolve, reject) {
-                var nodemail = getDependency("nodemailer");
-                var mailConfig = getDependency("../../config/dapi/mailer.json");
+                let nodemail = getDependency("nodemailer");
+                let mailConfig = $project.config.mailer;
 
-                var transport = nodemail.createTransport(mailConfig);
-                var work = [];
+                let transport = nodemail.createTransport(mailConfig);
+                let work = [];
                 mails.forEach(function (mail) {
                     work.push(transport.sendMail(mail));
                 });
