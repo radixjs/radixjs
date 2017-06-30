@@ -138,16 +138,26 @@ io = {
         out: "config/"
     },
     static: {
-        in: 'assets/**/*',
+        in: [
+            'assets/**/*',
+            //not stylesheets
+            '!assets/stylesheets/**/*.scss',
+            '!assets/stylesheets/**/*.sass',
+            '!assets/stylesheets/**/*.css',
+            //not multiple
+            "!assets/multiple/**/**.**",
+            //not js
+            "!assets/javascript/**/**.js"
+        ],
         out: '/public/'
     },
     stylesheets: {
         in: [
-            'front/stylesheets/**/*.scss',
-            'front/stylesheets/**/*.sass',
-            'front/stylesheets/**/*.css'
+            'assets/stylesheets/**/*.scss',
+            'assets/stylesheets/**/*.sass',
+            'assets/stylesheets/**/*.css',
         ],
-        out: '/assets/stylesheets/',
+        out: '/public/stylesheets/',
         root: "/"
     },
     views: {
@@ -155,29 +165,29 @@ io = {
         out: '/views/'
     },
     javascript: {
-        in: "front/javascript/**/**.js",
-        out: "/assets/javascript",
+        in: "assets/javascript/**/**.js",
+        out: "/public/javascript",
         root: "/"
     },
     multiple: {
-        in_js: "front/multiple/**/**.js",
-        in_ts: "front/multiple/**/**.ts",
-        in_pug: "front/multiple/**/**.pug",
+        in_js: "assets/multiple/**/**.js",
+        in_ts: "assets/multiple/**/**.ts",
+        in_pug: "assets/multiple/**/**.pug",
         in_css: [
-            "front/multiple/**/**.scss",
-            "front/multiple/**/**.sass"
+            "assets/multiple/**/**.scss",
+            "assets/multiple/**/**.sass"
         ],
         in_static: [
-            "front/multiple/**/**.**",
-            "!front/multiple/**/**.pug",
-            "!front/multiple/**/**.scss",
-            "!front/multiple/**/**.sass",
-            "!front/multiple/**/**.ts",
-            "!front/multiple/**/**.js"
+            "assets/multiple/**/**.**",
+            "!assets/multiple/**/**.pug",
+            "!assets/multiple/**/**.scss",
+            "!assets/multiple/**/**.sass",
+            "!assets/multiple/**/**.ts",
+            "!assets/multiple/**/**.js"
         ],
-        out: "/assets/multiple/"
+        out: "/public/multiple/"
     },
-    typescript: {in: "front/typescript/**/**.ts", out: "/assets/javascript/compiled"}
+    typescript: {in: "assets/typescript/**/**.ts", out: "/public/javascript/compiled"}
 };
 
 //Create Void infrastructure
@@ -238,16 +248,16 @@ let watch = {
         'radixFile.json'
     ],
     'stylesheets': [
-        'front/stylesheets/**/**.**',
+        'assets/stylesheets/**/**.**',
         "config/bundling.json"
     ],
-    'multiple': "front/multiple/**/**",
+    'multiple': "assets/multiple/**/**",
     'views': 'views/**/**',
     'javascript': [
-        'front/javascript/**/**.js',
+        'assets/javascript/**/**.js',
         "config/bundling.json"
     ],
-    'typescript': 'front/typescript/**/**.ts',
+    'typescript': 'assets/typescript/**/**.ts',
 };
 
 exports.tasks = {

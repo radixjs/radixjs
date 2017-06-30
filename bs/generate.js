@@ -170,7 +170,7 @@ module.exports = function (mod, ...args) {
                         `).then(data => console.log(`Model ${mod.settings.name} generated!`))
                 break;
             case "component/style":
-                let rootPath = "./front/stylesheets/";
+                let rootPath = "./assets/stylesheets/";
                 if (mod.settings.language != "scss" && mod.settings.language != "sass") {
                     console.log("Component does not support this language");
                     break;

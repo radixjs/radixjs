@@ -104,15 +104,13 @@ function* radix_core_express() {
         }
     });
 
+    radix.helpers.log("Setting up Public Folders");
+    app.use('/assets', express.static(path.join(__dirname, './public')));
+    app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(cookieParser());
-
-    radix.helpers.log("Setting up Public Folders");
-    app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/assets', express.static(path.join(__dirname, './assets')));
-    app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 
     radix.helpers.log("Setting up Express session");
