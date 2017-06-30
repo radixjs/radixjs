@@ -240,7 +240,9 @@ let watch = {
         'app/**/*.js',
         'hooks/**/*.js',
         'models/**/*.js',
-        'routers/**/*.js'
+        'routers/**/*.js',
+        'radixFile.json',
+        "config/environments.json"
     ],
     'dev': 'app/server/**/**.*',
     'static': [
