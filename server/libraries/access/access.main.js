@@ -6,26 +6,23 @@ function radix_dapis_access() {
                     let limit = $libraries.wizards.standards.ehgf13Arg(limitArg, request, false);
                     let failureRedirect = $libraries.wizards.standards.ehgf13Arg(failureRedirectArg, request, false);
 
-                    if (request.user) {
-                        if (request.user.admin || !limit) {
-                            next();
-                        } else if ((yield* $libraries.groups.fcs.getUsersBestRights(request.user._id)) <= limit) {
-                            next();
-                        } else {
-                            response.statusCode = 401;
-                            if(failureRedirect){
-                                response.redirect(failureRedirect);
-                            } else {
-                                next(401);
-                            }
-                        }
-                    } else {
+                    let failHandler = function(){
                         response.statusCode = 401;
                         if(failureRedirect){
                             response.redirect(failureRedirect);
                         } else {
                             next(401);
                         }
+                    };
+
+                    if (request.user) {
+                        if(request.user.rights > limitArg){
+                            failHandler();
+                        } else {
+                            next();
+                        }
+                    } else {
+                        failHandler();
                     }
                 }
             },
