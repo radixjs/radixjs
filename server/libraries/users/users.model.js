@@ -280,7 +280,8 @@ function radix_models_users() {
                     request.pehUsers = data;
                     next();
                 } catch (e) {
-                    next(e);
+                    request.pehUsers = e;
+                    next();
                 }
             }
         },
@@ -295,7 +296,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -308,7 +310,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -323,7 +326,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 }
@@ -341,7 +345,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -355,7 +360,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -371,7 +377,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 }
@@ -388,7 +395,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -401,7 +409,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },
@@ -416,7 +425,8 @@ function radix_models_users() {
                             request.pehUsers = data;
                             next();
                         } catch (e) {
-                            next(e);
+                            request.pehUsers = e;
+                            next();
                         }
                     }
                 },

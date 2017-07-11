@@ -11,7 +11,7 @@ function loadModule(moduleArg, settings) {
                 if(data.name && data.version && data.author && data.compatibility){
                     if(data.compatibility.map(version => checkVersion(radix.globals.version, version)).filter(e => e).length){
                         $modules[data.name] = myDependency;
-                        $project.modulesList.add(data.name);
+                        $project.moduleList.add(data.name);
                         myDependency.load(radix, settings);
                     } else {
                         throw "Dependency is not compatible with this app version";
